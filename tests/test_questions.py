@@ -16,10 +16,12 @@ class TestQuestions:
         main_page = MainPage(driver)
         questions_page = QuestionsPage(driver)
 
+        # Выполняем все шаги
         main_page.go_to_site()
         questions_page.scroll_to_questions()
         questions_page.click_question(question_id)
-
-        assert questions_page.is_answer_displayed(question_id)
         answer_text = questions_page.get_answer_text(question_id)
-        assert answer_text and len(answer_text) > 0
+
+        # Проверяем состояние системы после всех шагов
+        assert questions_page.is_answer_displayed(question_id), f"Ответ на вопрос {question_id} не отображается"
+        assert len(answer_text) > 0, f"Текст ответа на вопрос {question_id} пустой"
